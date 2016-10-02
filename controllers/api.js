@@ -2,7 +2,6 @@
 const async = require('async');
 const request = require('request');
 const graph = require('fbgraph');
-const GitHub = require('github');
 const Twit = require('twit');
 const paypal = require('paypal-rest-sdk');
 
@@ -42,23 +41,6 @@ exports.getFacebook = (req, res, next) => {
       title: 'Facebook API',
       me: results.getMyProfile,
       friends: results.getMyFriends
-    });
-  });
-};
-
-
-/**
- * GET /api/github
- * GitHub API Example.
- */
-exports.getGithub = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'github');
-  const github = new GitHub();
-  github.repos.get({ user: 'sahat', repo: 'hackathon-starter' }, (err, repo) => {
-    if (err) { return next(err); }
-    res.render('api/github', {
-      title: 'GitHub API',
-      repo
     });
   });
 };
