@@ -138,10 +138,10 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 
 app.get('/create-character', passportConfig.isAuthenticated, characterController.getNewCharacter);
 
-app.get('/rank', rankController.getRanks);
-app.get('/rank/delete/:id', rankController.deleteRank);
-app.get('/rank/new', rankController.newRank);
-app.post('/rank/new', rankController.postRank);
+app.get('/rank', passportConfig.isAuthenticated, rankController.getRanks);
+app.get('/rank/delete/:id', passportConfig.isAuthenticated, rankController.deleteRank);
+app.get('/rank/new', passportConfig.isAuthenticated, rankController.newRank);
+app.post('/rank/new', passportConfig.isAuthenticated, rankController.postRank);
 
 /**
 * API examples routes.
