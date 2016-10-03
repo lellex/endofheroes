@@ -1,0 +1,95 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 New rank
+  form.form-horizontal(id='character-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+
+    .form-group
+      label.col-sm-3.control-label(for='name') Name
+      .col-sm-7
+        input.form-control(type='text', name='name', id='name', placeholder='Name', autofocus, required)
+
+    .form-group
+      label.col-sm-3.control-label(for='description') Description
+      .col-sm-7
+        textarea.form-control(name='description', id='description', placeholder='Description', autofocus, required)
+
+    .form-group
+      label.col-sm-3.control-label(for='category') Category
+      .col-sm-7
+        select.form-control(name='category', id='category', autofocus, required)
+          each i in ['Guerrier', 'Magicien', 'Furtif', 'Constructeur']
+            option=i
+
+    .from-group.form-inline
+      table.table.ranks-table.table-striped
+        tr
+          - var labels = ['health', 'strength', 'magicka', 'armor', 'agility', 'stamina', 'accuracy', 'bravery', 'leadership', 'charisma']
+            each label in labels
+              th=label
+        tr
+          td
+            input.form-control(type='number', name='health', id='health', autofocus, min='1', max='600', required)
+
+          td
+            select.form-control(name='strength_amount', id='strength_amount', autofocus, required)
+              option 1
+              option 2
+              option 3
+            label D
+            select.form-control(name='strength_dice', id='strength_dice', autofocus, required)
+              option 4
+              option 6
+              option 8
+              option 10
+              option 12
+          td
+            input.form-control(type='number', name='magicka', id='magicka', autofocus, min='0', max='400', required)
+          td
+            input.form-control(type='number', name='armor', id='armor', autofocus, min='0', max='100', required)
+            label  %
+          td
+            input.form-control(type='number', name='agility', id='agility', autofocus, min='0', max='100', required)
+            label  %
+          td
+            select.form-control(name='stamina', id='stamina', autofocus, required)
+              each i in [1, 2, 3, 4, 5, 6]
+                option=i
+          td
+            select.form-control(name='accuracy_los', id='accuracy_los', autofocus, required)
+              each i in [1, 2, 3, 4, 5, 6]
+                option=i
+            label /
+            select.form-control(name='accuracy_aim', id='accuracy_aim', autofocus, required)
+              each i in [0, 1, 2, 3, 4]
+                option=i
+          td
+            label x
+            select.form-control(name='bravery', id='bravery', autofocus, required)
+              each i in [1, 2, 3]
+                option=i
+          td
+            select.form-control.lg(name='leadership', id='leadership', autofocus, required)
+              option Base
+              option Pallier 1
+          td
+            select.form-control(name='charisma', id='charisma', autofocus, required)
+              each i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                option=i
+        tr
+          each i in labels
+            td
+              select.form-control.fw(name='skill_' + i, id='skill_' + i, autofocus, required) #{i}
+                option Low
+                option Medium
+                option Fast
+
+
+
+      .form-group.pull-right
+        .col-sm-7
+          button.btn.btn-success(type='submit')
+            i.fa.fa-user-plus
+            | Create new rank

@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema,
+      ObjectId = Schema.ObjectId;
+
 const characterSchema = new Schema({
-  name: String,
+  name: { type: String, required: true },
+  rankId: { type: ObjectId },
+  createdBy: { type: String, required: true }
+}, { timestamps: true });
 
-});
-
-characterSchema.virtual('categoryId').get(function() {
+characterSchema.virtual('characterId').get(function() {
     return this._id;
 });
 

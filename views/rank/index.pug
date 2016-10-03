@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+  .page-header.ranks
+    h3 List of available rank
+
+    .row
+      .col-sm-12
+        p.pull-right
+          a.btn.btn-success(href='/rank/new', role='button')
+            i.fa.fa-plus
+            | New rank
+
+    .row
+      .col-sm-12
+        each rank in ranks
+          .pull-left
+            h3= rank.name
+              - var id = rank._id
+              small
+                a.text-danger(href='/rank/delete/' + id)
+                  i.fa.fa-close
+            h4 Category: #{rank.category}
+            p= rank.description
+
+          - var labels = ['Health', 'Strength', 'Magicka', 'Armor', 'Agillity', 'Stamina', 'Accuracy', 'Bravery', 'Leadership', 'Charisma']
+          table.table
+            tr
+              each label in labels
+                th=label
+            tr
+              td= rank.health[0].score
+              td #{rank.strength[0].amount}D#{rank.strength[0].dice}
+              td= rank.armor[0].score
+              td= rank.agility[0].score
+              td= rank.stamina[0].score
+              td= rank.magicka[0].score
+              td= rank.bravery[0].score
+              td= rank.leadership[0].score
+              td= rank.charisma[0].score
+              td #{rank.accuracy[0].los}/#{rank.accuracy[0].aim}

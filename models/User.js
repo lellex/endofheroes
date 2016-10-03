@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
+    
 const userSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
@@ -13,9 +14,6 @@ const userSchema = new Schema({
   facebook: String,
   twitter: String,
   google: String,
-  github: String,
-  instagram: String,
-  linkedin: String,
   steam: String,
   tokens: Array,
 
@@ -27,13 +25,6 @@ const userSchema = new Schema({
     picture: String
   },
 
-  character: {
-    name: String,
-    gender: String,
-    location: String,
-    website: String,
-    picture: String
-  },
   characterId: ObjectId
 }, { timestamps: true });
 

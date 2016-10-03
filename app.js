@@ -31,6 +31,8 @@ dotenv.load({ path: '.env' });
  */
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
+const characterController = require('./controllers/character');
+const rankController = require('./controllers/rank');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 
@@ -126,15 +128,24 @@ app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
+
+
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+app.get('/create-character', passportConfig.isAuthenticated, characterController.getNewCharacter);
+
+app.get('/rank', rankController.getRanks);
+app.get('/rank/delete/:id', rankController.deleteRank);
+app.get('/rank/new', rankController.newRank);
+app.post('/rank/new', rankController.postRank);
+
 /**
- * API examples routes.
- */
+* API examples routes.
+*/
 app.get('/api', apiController.getApi);
 app.get('/api/aviary', apiController.getAviary);
 app.get('/api/steam', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getSteam);

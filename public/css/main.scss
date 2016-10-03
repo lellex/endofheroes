@@ -69,3 +69,36 @@ textarea {
 .fa {
   margin-right: 6px;
 }
+
+
+
+// Ranks
+// -------------------------
+h3 small {
+  margin: 8px;
+}
+
+// Ranks table
+// -------------------------
+.ranks-table {
+  margin: 30px 0;
+  td {
+    border-right: solid 1px $table-border-color;
+  }
+  td:last-child {
+    border-right: 0;
+  }
+  .form-control {
+    width: 70px;
+    margin-right: 0;
+    &.lg {
+      width: 100px;
+    }
+    &.fw {
+      width: 100%;
+    }
+  }
+  label {
+    padding: 0 4px;
+  }
+}
