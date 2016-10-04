@@ -2,4 +2,33 @@ extends ../layout
 
 block content
   .page-header
-    h3 Create new character
+    h3 My character
+
+    if character
+      .row
+        .col-sm-12
+          .pull-left
+            h3= character.name
+            h4 Category: #{character.caracteristics[0].category}
+
+          - var labels = ['Health', 'Strength', 'Magicka', 'Armor', 'Agillity', 'Stamina', 'Accuracy', 'Bravery', 'Leadership', 'Charisma']
+          table.table
+            tr
+              each label in labels
+                th=label
+            tr
+              td= character.caracteristics[0].health[0].score
+              td #{character.caracteristics[0].strength[0].amount}D#{character.caracteristics[0].strength[0].dice}
+              td= character.caracteristics[0].armor[0].score
+              td= character.caracteristics[0].agility[0].score
+              td= character.caracteristics[0].stamina[0].score
+              td= character.caracteristics[0].magicka[0].score
+              td= character.caracteristics[0].bravery[0].score
+              td= character.caracteristics[0].leadership[0].score
+              td= character.caracteristics[0].charisma[0].score
+              td #{character.caracteristics[0].accuracy[0].los}
+                //- | /#{character.accuracy[0].aim}
+    else
+      p You didn't have any character yet.
+      p
+        a.btn.btn-default(href='/create-character', role='button') Create character

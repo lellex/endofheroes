@@ -136,7 +136,9 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+app.get('/character', passportConfig.isAuthenticated, characterController.getCharacter);
 app.get('/create-character', passportConfig.isAuthenticated, characterController.getNewCharacter);
+app.post('/create-character', passportConfig.isAuthenticated, characterController.postNewCharacter);
 
 app.get('/rank', passportConfig.isAuthenticated, rankController.getRanks);
 app.get('/rank/delete/:id', passportConfig.isAuthenticated, rankController.deleteRank);

@@ -4,13 +4,19 @@ const User = require('../models/User');
 const Character = require('../models/Character');
 const Rank = require('../models/Rank');
 
-describe('User Model', () => {
+
+describe('Models : User, Rank, Character', () => {
+  var UserTestId = null;
+  var RankTestId = null;
+  var CharacterTestId = null;
+
   it('should create a new user', (done) => {
     const user = new User({
       email: 'test@gmail.com',
       password: 'password'
     });
-    user.save((err) => {
+    user.save((err, user) => {
+      UserTestId = user._id;
       expect(err).to.be.null;
       expect(user.email).to.equal('test@gmail.com');
       expect(user).to.have.property('createdAt');
@@ -31,54 +37,14 @@ describe('User Model', () => {
     });
   });
 
-  it('should find user by email', (done) => {
-    User.findOne({ email: 'test@gmail.com' }, (err, user) => {
+  it('should find user by id', (done) => {
+    User.findOne({ _id: UserTestId }, (err, user) => {
       expect(err).to.be.null;
       expect(user.email).to.equal('test@gmail.com');
       done();
     });
   });
 
-  it('should delete a user', (done) => {
-    User.remove({ email: 'test@gmail.com' }, (err) => {
-      expect(err).to.be.null;
-      done();
-    });
-  });
-});
-
-describe('Character Model', () => {
-  it('should not create a new character without author', (done) => {
-    const character = new Character({
-      name: 'Bodla'
-    });
-
-    character.save((err) => {
-      expect(err.name).to.equal('ValidationError');
-      done();
-    });
-  });
-
-  it('should create a new character', (done) => {
-    const bodla = new User({
-      email: 'bodla@gmail.com',
-      password: 'password'
-    });
-
-    const character = new Character({
-      name: 'Bodla',
-      createdBy: bodla.email
-    });
-
-    character.save((err) => {
-      console.log(err);
-      expect(err).to.be.null;
-      done();
-    });
-  });
-});
-
-describe('Rank Model', () => {
   it('should create a new rank', (done) => {
     const rank = new Rank({
       name: 'Rank For Test',
@@ -128,15 +94,58 @@ describe('Rank Model', () => {
       }]
     });
 
-    rank.save((err) => {
-      console.log(err);
+    rank.save((err, rank) => {
+      RankTestId = rank._id;
+      expect(err).to.be.null;
+      done();
+    });
+  });
+
+  it('should find a rank by id', (done) => {
+    Rank.findOne({ _id: RankTestId }, function(err, rank) {
+      expect(err).to.be.null;
+      done();
+    });
+  });
+
+  it('should create a new character', (done) => {
+    User.findOne({ _id: UserTestId }, (err, user) => {
+      Rank.findOne({ _id: RankTestId }, function(err, rank) {
+        const charRank = new Rank(rank);
+        charRank._id = undefined;
+        charRank.description = undefined;
+
+        const character = new Character({
+          name: 'Bodla',
+          createdBy: user._id,
+          caracteristics: charRank
+        });
+
+        character.save((err, character) => {
+          CharacterTestId = character._id;
+          expect(err).to.be.null;
+          done();
+        });
+      });
+    });
+  });
+
+  it('should a character', (done) => {
+    Character.remove({ _id: CharacterTestId }, (err) => {
       expect(err).to.be.null;
       done();
     });
   });
 
   it('should delete a rank', (done) => {
-    User.remove({ name: 'Rank For Test' }, (err) => {
+    Rank.remove({ _id: RankTestId }, (err) => {
+      expect(err).to.be.null;
+      done();
+    });
+  });
+
+  it('should delete a user', (done) => {
+    User.remove({ _id: UserTestId }, (err) => {
       expect(err).to.be.null;
       done();
     });
